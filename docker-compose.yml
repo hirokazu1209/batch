@@ -1,0 +1,16 @@
+version: '3.8'
+# コンテナごとに設定を書いていく
+services:
+  mysql:
+    # コンテナで使用するDockerのイメージを設定する
+    image: mysql:8.0
+    # ローカルPCのディレクトリをコンテナ内のディレクトリとして提供する
+    volumes:
+      # tmp/mysqlディレクトリをコンテナ内の/var/lib/mysqlディレクトリとする
+      # この設定により、MySQLのコンテナが何らかの理由で停止してしまった場合もDB内にデータは残る
+      - ./tmp/mysql:/var/lib/mysql
+    ports:
+      # ローカル側で接続時に使うポート番号:コンテナ側で受け入れるポート番号
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=batch
